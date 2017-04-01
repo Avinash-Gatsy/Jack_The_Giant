@@ -22,7 +22,9 @@ class GameplayScene: SKScene {
     var moveLeft = false
     var center: CGFloat?
     
-    let distanceBetweenClouds = CGFloat(250)
+    private var cameraDistanceBeforeCreatingNewClouds = CGFloat()
+    
+    let distanceBetweenClouds = CGFloat(275)
     let minX = CGFloat(-104.7)
     let maxX = CGFloat(104.7)
     
@@ -34,6 +36,7 @@ class GameplayScene: SKScene {
         moveCamera()
         managePlayer()
         manageBackgrounds()
+        createNewClouds()
     }
     func initializeVariables(){
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
@@ -48,6 +51,8 @@ class GameplayScene: SKScene {
         getBackgorounds()
         
         cloudsController.arrangeCloudsInScene(scene: self.scene!, distanceBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, initialClouds: true)
+        
+        cameraDistanceBeforeCreatingNewClouds = (mainCamera?.position.y)! - 350
     }
     func getBackgorounds(){
         bg1 = self.childNode(withName: "BG 1") as?  BGClass!
@@ -86,5 +91,12 @@ class GameplayScene: SKScene {
         bg1?.moveBG(camera: mainCamera!)
         bg2?.moveBG(camera: mainCamera!)
         bg3?.moveBG(camera: mainCamera!)
+    }
+    func createNewClouds(){
+        if cameraDistanceBeforeCreatingNewClouds > (mainCamera?.position.y)! {
+            cameraDistanceBeforeCreatingNewClouds = (mainCamera?.position.y)! - 350
+            
+            cloudsController.arrangeCloudsInScene(scene: self.scene!, distanceBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, initialClouds: false)
+        }
     }
 }
