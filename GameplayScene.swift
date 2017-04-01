@@ -10,6 +10,7 @@ import SpriteKit
 
 class GameplayScene: SKScene {
     
+    var cloudsController = CloudsController()
     var mainCamera: SKCameraNode?
     
     var bg1:BGClass?
@@ -20,6 +21,11 @@ class GameplayScene: SKScene {
     var canMove = false
     var moveLeft = false
     var center: CGFloat?
+    
+    let distanceBetweenClouds = CGFloat(250)
+    let minX = CGFloat(-95.5)
+    let maxX = CGFloat(95.5)
+    
     
     override func didMove(to view: SKView) {
        initializeVariables()
@@ -40,6 +46,8 @@ class GameplayScene: SKScene {
         player?.initializePlayerAndAnimations()
         
         getBackgorounds()
+        
+        cloudsController.arrangeCloudsInScene(scene: self.scene!, distanceBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, initialClouds: true)
     }
     func getBackgorounds(){
         bg1 = self.childNode(withName: "BG 1") as?  BGClass!

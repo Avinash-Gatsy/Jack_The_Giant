@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E158B6EE1E900E3600483F2E /* CloudsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E158B6ED1E900E3600483F2E /* CloudsController.swift */; };
 		E174A9451E8FD9FB00A40BE2 /* BGClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E174A9441E8FD9FB00A40BE2 /* BGClass.swift */; };
 		E1D4D1F51E8D85130011AE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D4D1F41E8D85130011AE96 /* AppDelegate.swift */; };
 		E1D4D1F71E8D85130011AE96 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E1D4D1F61E8D85130011AE96 /* GameScene.sks */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E158B6ED1E900E3600483F2E /* CloudsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudsController.swift; sourceTree = "<group>"; };
 		E174A9441E8FD9FB00A40BE2 /* BGClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClass.swift; sourceTree = "<group>"; };
 		E1D4D1F11E8D85130011AE96 /* Jack The Giant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jack The Giant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D4D1F41E8D85130011AE96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +176,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E158B6EC1E900E2100483F2E /* Clouds Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E158B6ED1E900E3600483F2E /* CloudsController.swift */,
+			);
+			name = "Clouds Classes";
+			sourceTree = "<group>";
+		};
 		E174A9431E8FD9E100A40BE2 /* Background Class */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +399,7 @@
 		E1D4D28B1E8D895D0011AE96 /* Game Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E158B6EC1E900E2100483F2E /* Clouds Classes */,
 				E174A9431E8FD9E100A40BE2 /* Background Class */,
 				E1D4D28F1E8D8B940011AE96 /* Player Class */,
 				E1D4D28C1E8D89710011AE96 /* Scene Classes */,
@@ -596,6 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1D4D28E1E8D899A0011AE96 /* GameplayScene.swift in Sources */,
+				E158B6EE1E900E3600483F2E /* CloudsController.swift in Sources */,
 				E1D4D1FB1E8D85130011AE96 /* GameScene.swift in Sources */,
 				E1D4D1FD1E8D85130011AE96 /* GameViewController.swift in Sources */,
 				E1D4D2911E8D8BB10011AE96 /* Player.swift in Sources */,
