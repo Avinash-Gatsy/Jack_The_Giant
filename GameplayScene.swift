@@ -23,8 +23,8 @@ class GameplayScene: SKScene {
     var center: CGFloat?
     
     let distanceBetweenClouds = CGFloat(250)
-    let minX = CGFloat(-95.5)
-    let maxX = CGFloat(95.5)
+    let minX = CGFloat(-104.7)
+    let maxX = CGFloat(104.7)
     
     
     override func didMove(to view: SKView) {

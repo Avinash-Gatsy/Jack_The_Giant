@@ -8,6 +8,13 @@
 
 import SpriteKit
 
+struct colliderType {
+    //we use these for the bitMasks
+    static let Player: UInt32 = 0
+    static let Cloud: UInt32 = 1
+    static let DarkCloudAndCollectables: UInt32 = 2
+    
+}
 class Player: SKSpriteNode {
     
     private var textureAtlas = SKTextureAtlas()
@@ -25,6 +32,16 @@ class Player: SKSpriteNode {
             playerAnimation.append(SKTexture(imageNamed: name))
         }
         animatePlayerAction = SKAction.animate(with: playerAnimation, timePerFrame: 0.08, resize: true, restore: false)
+        
+        //adding physicsBody to the player
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width - 40, height: self.size.height - 5))
+        self.physicsBody?.affectedByGravity = true
+        self.physicsBody?.allowsRotation = false //avoid the player to rotate
+        self.physicsBody?.restitution = 0 //avoid the player to bounce on collision
+        self.physicsBody?.contactTestBitMask = colliderType.Player
+        self.physicsBody?.collisionBitMask = colliderType.Cloud
+        self.physicsBody?.contactTestBitMask = colliderType.DarkCloudAndCollectables
+        
     }
     func animatePlayer(moveLeft: Bool){
         //to change the direction of the player
