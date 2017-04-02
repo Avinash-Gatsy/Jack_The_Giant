@@ -127,7 +127,7 @@ class CloudsController{
             }
             
             clouds[i].position = CGPoint(x: randomX, y: positionY)
-            clouds[i].zPosition = 3
+            clouds[i].zPosition = 3 //note the zPosition for player is 4
             scene.addChild(clouds[i])
             
             //reposition the clouds
