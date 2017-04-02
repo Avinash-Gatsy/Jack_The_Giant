@@ -32,6 +32,20 @@ class MainMenuScene: SKScene {
 //            if node == highscoreBtn{
 //                print("high score btn is pressed")
 //            }
+            if node.name == "Option" {
+                
+                //navigate to the HighscoreScene
+                let scene = OptionScene(fileNamed: "OptionScene")
+                scene?.scaleMode = .aspectFill
+                self.view?.presentScene(scene!, transition: SKTransition.doorsOpenVertical(withDuration: 1))
+            }
+            if node.name == "Start Game" {
+                
+                //navigate to the HighscoreScene
+                let scene = GameplayScene(fileNamed: "GameplayScene")
+                scene?.scaleMode = .aspectFill
+                self.view?.presentScene(scene!, transition: SKTransition.doorsOpenVertical(withDuration: 1))
+            }
         }
     }
 }
