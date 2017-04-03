@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameplayScene: SKScene {
+class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     var cloudsController = CloudsController()
     var mainCamera: SKCameraNode?
@@ -37,8 +37,45 @@ class GameplayScene: SKScene {
         managePlayer()
         manageBackgrounds()
         createNewClouds()
+        player?.setScore()
     }
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        var firstBody = SKPhysicsBody()
+        var secondBody = SKPhysicsBody()
+        
+        //making the firstBody to be the Player
+        if contact.bodyA.node?.name == "Player" {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        if firstBody.node?.name == "Player" && secondBody.node?.name == "Life"{
+            //play the sound for life
+            
+            //increment the life and score
+            GameplayController.instance.incrementLife()
+            
+            //remove the life from scene
+            secondBody.node?.removeFromParent()
+            
+        } else if firstBody.node?.name == "Player" && secondBody.node?.name == "Coin" {
+            //play the coin sound
+            
+            //increment coin and score
+            GameplayController.instance.incrementCoin()
+            
+            secondBody.node?.removeFromParent()
+        } else if firstBody.node?.name == "Player" && secondBody.node?.name == "Dark Cloud" {
+            //kill the player
+        }
+    }
+    
     func initializeVariables(){
+        physicsWorld.contactDelegate = self // we will handle the physics on contact
+        
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         player = (self.childNode(withName: "Player") as! Player)
         

@@ -21,6 +21,8 @@ class Player: SKSpriteNode {
     private var playerAnimation = [SKTexture]()
     private var animatePlayerAction = SKAction()
     
+    var lastY = CGFloat()
+    
     func initializePlayerAndAnimations(){
         //we get all the player images and store in the below textureAtlas variable
         textureAtlas = SKTextureAtlas(named: "Player.atlas") // check the Assets group
@@ -41,6 +43,8 @@ class Player: SKSpriteNode {
         self.physicsBody?.contactTestBitMask = colliderType.Player
         self.physicsBody?.collisionBitMask = colliderType.Cloud
         self.physicsBody?.contactTestBitMask = colliderType.DarkCloudAndCollectables
+        
+        lastY = self.position.y
         
     }
     func animatePlayer(moveLeft: Bool){
@@ -70,6 +74,13 @@ class Player: SKSpriteNode {
             self.position.x -= 7
         }else{
             self.position.x += 7
+        }
+    }
+    func setScore(){
+        //we are moving downward so the y value decreases as the player goes down
+        if self.position.y < lastY{
+            GameplayController.instance.incrementScore()
+            lastY = self.position.y //update the lastY value
         }
     }
 }

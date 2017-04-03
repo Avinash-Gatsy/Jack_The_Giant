@@ -135,6 +135,7 @@ class CloudsController{
                 
                 if clouds[i].name != "Dark Cloud" {
                     
+                    //lower the value to spwan more collectables
                     if Int(randomBetweenNumbers(firstNum: 0, secondNum: 7)) >= 1 {
                         let collectable = collectableController.getCollectable()
                         collectable.position = CGPoint(x: clouds[i].position.x, y: clouds[i].position.y + 60)

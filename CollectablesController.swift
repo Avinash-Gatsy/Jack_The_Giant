@@ -14,9 +14,10 @@ class CollectablesController{
         
         var collectable = SKSpriteNode()
         
-        if Int(randomBetweenNumbers(firstNum: 0, secondNum: 7)) >= 2 {
+        //lower the value to spawn more life
+        if Int(randomBetweenNumbers(firstNum: 0, secondNum: 7)) >= 5 {
             
-            if GameplayController.instance.life! < 2{
+            if GameplayController.instance.life! < 2 {
                 //spawn a life 
                 collectable = SKSpriteNode(imageNamed: "Life")
                 collectable.name = "Life"
