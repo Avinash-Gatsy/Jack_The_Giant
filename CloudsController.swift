@@ -10,6 +10,8 @@ import SpriteKit
 
 class CloudsController{
     
+    let collectableController = CollectablesController()
+    
     //store the last cloud position y
     var lastCloudPosY = CGFloat()
     
@@ -128,6 +130,22 @@ class CloudsController{
             
             clouds[i].position = CGPoint(x: randomX, y: positionY)
             clouds[i].zPosition = 3 //note the zPosition for player is 4
+            
+            if !initialClouds{
+                
+                if clouds[i].name != "Dark Cloud" {
+                    
+                    if Int(randomBetweenNumbers(firstNum: 0, secondNum: 7)) >= 1 {
+                        let collectable = collectableController.getCollectable()
+                        collectable.position = CGPoint(x: clouds[i].position.x, y: clouds[i].position.y + 60)
+                        
+                        scene.addChild(collectable)
+                        
+                    }
+                }
+                
+            }
+            
             scene.addChild(clouds[i])
             
             //reposition the clouds
