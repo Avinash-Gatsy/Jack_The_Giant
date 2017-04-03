@@ -21,8 +21,8 @@ class CloudsController{
             
            //gives a random number upto i - 1
             let j = Int(arc4random_uniform(UInt32(i - 1)))
-            //swapping the position of clouds in the cloudsArray
-            swap(&cloudsArray[i], &cloudsArray[j])
+           //swapping the position of clouds in the cloudsArray
+             swap(&cloudsArray[i], &cloudsArray[j])
         }
         return cloudsArray
         
