@@ -22,6 +22,9 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     var moveLeft = false
     var center: CGFloat?
     
+    private let playerMinX = CGFloat(-165)
+    private let playerMaxX = CGFloat(165)
+    
     private var cameraDistanceBeforeCreatingNewClouds = CGFloat()
     
     let distanceBetweenClouds = CGFloat(200)
@@ -75,6 +78,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     func initializeVariables(){
         physicsWorld.contactDelegate = self // we will handle the physics on contact
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -7.0) //changing the value of gravity
         
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         player = (self.childNode(withName: "Player") as! Player)
@@ -144,11 +148,25 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
         if canMove{
             player?.movePlayer(moveLeft: moveLeft)
         }
+        if (player?.position.x)! < playerMinX{
+            player?.position.x = playerMinX
+        }
+        if (player?.position.x)! > playerMaxX {
+            player?.position.x = playerMaxX
+        }
+        if (player?.position.y)! - (player?.size.height)! * 3.2 > (mainCamera?.position.y)! {
+            print("the player is out of bounds up")
+            self.scene?.isPaused = true //pause the scene
+        }
+        if (player?.position.y)! + (player?.size.height)! * 3.2 < (mainCamera?.position.y)! {
+            print("the player is out of bounds down")
+            self.scene?.isPaused = true //pause the scene
+        }
     }
     func moveCamera(){
         // we will move the camera only in the y direction
         // depending on the level of the player we can pace up the movement of camera downward
-        self.mainCamera?.position.y -= 2.5
+        self.mainCamera?.position.y -= 3.0
     }
     func manageBackgrounds(){
         bg1?.moveBG(camera: mainCamera!)
@@ -160,6 +178,24 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
             cameraDistanceBeforeCreatingNewClouds = (mainCamera?.position.y)! - 350
             
             cloudsController.arrangeCloudsInScene(scene: self.scene!, distanceBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, initialClouds: false)
+            
+            //whenever we create new clouds we will remove the ones which are out of the screen
+            checkForChildsOutOffScreen()
+        }
+    }
+    func checkForChildsOutOffScreen(){
+        for child in children{
+            
+            if child.position.y > (mainCamera?.position.y)! + (self.scene?.size.height)!{
+                
+                //note we cannot directly remove the child here as it includes our BG as well
+                let childName = child.name?.components(separatedBy: " ")
+                
+                if childName?[0] != "BG"{
+                    print("The child that was removed is \(child.name!)")
+                    child.removeFromParent()
+                }
+            }
         }
     }
     func getLabels(){

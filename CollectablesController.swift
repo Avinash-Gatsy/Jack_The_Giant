@@ -22,6 +22,10 @@ class CollectablesController{
                 collectable = SKSpriteNode(imageNamed: "Life")
                 collectable.name = "Life"
                 collectable.physicsBody = SKPhysicsBody(rectangleOf: collectable.size)
+            } else {
+                //we need to name the collectable if our above check fails
+                //if we dont giv  a name it will throw a nil exception in checkForChildsOutOffScreen() when we are seperating the name wrt " "
+                collectable.name = "Empty"
             }
             
         } else {
