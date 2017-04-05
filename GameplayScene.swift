@@ -78,7 +78,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     func initializeVariables(){
         physicsWorld.contactDelegate = self // we will handle the physics on contact
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -7.0) //changing the value of gravity
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.6) //changing the value of gravity
         
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         player = (self.childNode(withName: "Player") as! Player)
