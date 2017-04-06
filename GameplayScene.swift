@@ -22,6 +22,10 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     var moveLeft = false
     var center: CGFloat?
     
+    private var acceleration = CGFloat()
+    private var cameraSpeed = CGFloat()
+    private var maxSpeed = CGFloat()
+    
     private let playerMinX = CGFloat(-165)
     private let playerMaxX = CGFloat(165)
     
@@ -78,7 +82,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     func initializeVariables(){
         physicsWorld.contactDelegate = self // we will handle the physics on contact
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.6) //changing the value of gravity
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -7.5) //changing the value of gravity
         
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         player = (self.childNode(withName: "Player") as! Player)
@@ -98,6 +102,8 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
         cloudsController.arrangeCloudsInScene(scene: self.scene!, distanceBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, initialClouds: true)
         
         cameraDistanceBeforeCreatingNewClouds = (mainCamera?.position.y)! - 350
+        
+        setCameraSpeed()
     }
     func getBackgorounds(){
         bg1 = self.childNode(withName: "BG 1") as?  BGClass!
@@ -166,7 +172,14 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     func moveCamera(){
         // we will move the camera only in the y direction
         // depending on the level of the player we can pace up the movement of camera downward
-        self.mainCamera?.position.y -= 3.0
+        //self.mainCamera?.position.y -= 3.0
+        
+        //camera speed to be dynamic based on difficulity lvl
+        cameraSpeed += acceleration
+        if cameraSpeed > maxSpeed {
+            cameraSpeed = maxSpeed
+        }
+        mainCamera?.position.y -= cameraSpeed
     }
     func manageBackgrounds(){
         bg1?.moveBG(camera: mainCamera!)
@@ -233,6 +246,22 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
         
         self.mainCamera?.addChild(pausePanel!)
         
+    }
+    
+    private func setCameraSpeed() {
+        if GameManager.instance.getEasyDifficulity(){
+            acceleration = 0.001
+            cameraSpeed = 2.0
+            maxSpeed = 3.5
+        } else if GameManager.instance.getMediumDifficulity(){
+            acceleration = 0.002
+            cameraSpeed = 2.5
+            maxSpeed = 3.75
+        } else if GameManager.instance.getHardDifficulity(){
+            acceleration = 0.0025
+            cameraSpeed = 3.0
+            maxSpeed = 4.25
+        }
     }
 }
 

@@ -89,23 +89,24 @@ class CloudsController{
             
         }
         clouds = shuffle(cloudsArray: clouds)
+        
         return clouds
     }
     //the arguments we pass in the below function 
     //scene-GameplayScene
     //distanceBetweenClouds - its the distance between then in y axis
     //initialClouds - to check the clouds during the start of the game 
-    
+   
     func arrangeCloudsInScene(scene: SKScene, distanceBetweenClouds: CGFloat, center: CGFloat, minX: CGFloat, maxX: CGFloat, initialClouds: Bool){
         
         var clouds = createClouds()
         
-        if initialClouds{
+        //if initialClouds{
             while (clouds[0].name == "Dark Cloud") {
                 //shuffle the cloud array
                 clouds = shuffle(cloudsArray: clouds)
             }
-        }
+        //}
         
         var positionY = CGFloat()
         
