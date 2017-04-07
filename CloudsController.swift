@@ -76,7 +76,7 @@ class CloudsController{
             cloud3.physicsBody?.categoryBitMask = colliderType.Cloud
             cloud3.physicsBody?.collisionBitMask = colliderType.Player
             
-            darkCloud.physicsBody = SKPhysicsBody(rectangleOf: darkCloud.size)
+            darkCloud.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: darkCloud.size.width - 12, height: darkCloud.size.height - 18))
             darkCloud.physicsBody?.affectedByGravity = false
             darkCloud.physicsBody?.categoryBitMask = colliderType.DarkCloudAndCollectables
             darkCloud.physicsBody?.collisionBitMask = colliderType.Player
