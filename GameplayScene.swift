@@ -84,12 +84,13 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life!)"
             } else {
                 //show end score panel
+                createEndScorePanel()
             }
             firstBody.node?.removeFromParent() //remove the player when he is kiled
             
             //delay the playerDied function call after the player is removed
             
-            Timer.scheduledTimer(timeInterval: TimeInterval(1.5), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: TimeInterval(2.0), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
             
             //playerDied()
             
@@ -186,9 +187,10 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life!)"
             } else {
                 //show end score panel
+                createEndScorePanel()
             }
             
-            Timer.scheduledTimer(timeInterval: TimeInterval(1.5), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: TimeInterval(2.0), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
         }
         if (player?.position.y)! + (player?.size.height)! * 3.2 < (mainCamera?.position.y)! {
             print("the player is out of bounds down")
@@ -200,9 +202,10 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life!)"
             } else {
                 //show end score panel
+                createEndScorePanel()
             }
             
-            Timer.scheduledTimer(timeInterval: TimeInterval(1.5), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: TimeInterval(2.0), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
         }
     }
     func moveCamera(){
@@ -241,7 +244,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
                 let childName = child.name?.components(separatedBy: " ")
                 
                 if childName?[0] != "BG"{
-                    print("The child that was removed is \(child.name!)")
+                    //print("The child that was removed is \(child.name!)")
                     child.removeFromParent()
                 }
             }
@@ -283,7 +286,33 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
         self.mainCamera?.addChild(pausePanel!)
         
     }
-    
+    func createEndScorePanel() {
+        let endScorePanel = SKSpriteNode(imageNamed: "Show Score")
+        let scoreLabel = SKLabelNode(fontNamed: "Blow")
+        let coinLabel = SKLabelNode(fontNamed: "Blow")
+        
+        endScorePanel.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        endScorePanel.zPosition = 8 //render on top of everything
+        endScorePanel.setScale(1.0)
+        
+        scoreLabel.fontSize = 48
+        scoreLabel.zPosition = 7
+        
+        coinLabel.fontSize = 48
+        coinLabel.zPosition = 7
+        
+        scoreLabel.text = "\(GameplayController.instance.score!)"
+        coinLabel.text = "\(GameplayController.instance.coin!)"
+        
+        endScorePanel.addChild(scoreLabel)
+        endScorePanel.addChild(coinLabel)
+        
+        endScorePanel.position = CGPoint(x: (mainCamera?.frame.size.width)! / 2, y: (mainCamera?.frame.height)! / 2)
+        scoreLabel.position = CGPoint(x: endScorePanel.position.x, y: endScorePanel.position.y)
+        coinLabel.position = CGPoint(x: endScorePanel.position.x, y: endScorePanel.position.y - 100)
+        
+        mainCamera?.addChild(endScorePanel)
+    }
     private func setCameraSpeed() {
         if GameManager.instance.getEasyDifficulity(){
             acceleration = 0.001
